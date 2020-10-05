@@ -5,7 +5,10 @@
             <tr>
                 <th>Title</th>
                 <td><input type="text" name="title" class="title" size="40" v-model="title" @focus="set_flg">
-                <button @click="find">find</button></td>
+                <transition name="button_group1">
+                    <button v-if="sel_flg == false" @click="find">find</button>
+                </transition>
+                </td>
             </tr>
             <tr>
                 <th>Content</th>
@@ -13,9 +16,13 @@
             </tr>
             <tr>
                 <th></th>
-                <td><button @click="insert">save</button>
-                <transition name="del">
-                    <button v-if="sel_flg != false" @click="remove">delete </button>
+                <td><button v-if="sel_flg == false" @click="insert">save</button>
+                <transition name="button_group1">
+                    <span v-if="sel_flg != false">
+                        <button @click="update">update</button> 
+                        <button @click="remove">delete </button>
+                        <button class="right" @click="set_flg">return </button>
+                    </span>
                 </transition>
                 </td>
             </tr>
@@ -37,6 +44,7 @@ export default {
         return {
             title: '',
             content: '',
+            created: '',
             num_per_page: 7,
             find_flg: false,
             sel_flg: false,
@@ -78,6 +86,7 @@ export default {
                 this.sel_flg = false;
                 this.title = '';
                 this.content = '';
+                this.created = '';
             }
         },
         insert: function(){
@@ -85,11 +94,23 @@ export default {
             this.title = '';
             this.content= '';
         },
+        update: function(){
+            if(this.sel_flg == false){
+                return;
+            }else {
+                this.$store.commit('diary/update', {id:this.sel_flg.id, title:this.title, content:this.content, created:this.created});
+                this.title = '';
+                this.content = '';
+                this.created = '';
+                this.set_flg();
+            }
+        },
         select: function(item){
             this.find_flg = false;
             this.sel_flg = item;
             this.title = item.title;
             this.content = item.content;
+            this.created = item.created;
         },
         remove: function(){
             if(this.sel_flg == false){
@@ -144,11 +165,24 @@ textarea {
     font-size: 14pt;
     margin: 5px;
 }
-button {
+/* button {
     font-size: 14pt;
     padding: 1px 10px;
     margin: 5px;
     width: 75px;
+} */
+button {
+  color:rgba(43, 32, 32, 0.76) ;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px 25px;
+  background-color: white;
+  border: 1px solid #D7DBDD;
+  border-radius: 0;
+  outline: 0;
+}
+.right {
+    float: right;
 }
 hr {
     border-style: none;
@@ -177,10 +211,10 @@ td {
 .list {
     cursor : pointer;
 }
-.del-enter-active, .del-leave-active {
+.button_group1-enter-active, .button_group1-leave-active {
     transition: opacity .5s;
 }
-.del-enter, .del-leave-to {
+.button_group1-enter, .button_group1-leave-to {
     opacity: 0;
 }
 </style>

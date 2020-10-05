@@ -43,5 +43,10 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    extend(config, ctx) {
+      if (ctx.isDev) {
+      config.devtool = 'inline-cheap-module-source-map'
+      }
+    }
   }
 }
