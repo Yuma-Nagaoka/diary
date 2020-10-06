@@ -1,43 +1,34 @@
 <template>
     <div class="container">
         <h1>Diary</h1>
-         <v-container>
-                    <v-row justify="center">
-                        <v-col cols="6">
-                        <v-card>
-                            <v-card-title>Hello, Vuetify!</v-card-title>
-                        </v-card>
-                        </v-col>
-                    </v-row>
-                </v-container>
         <table>
             <tr>
                 <th>Title</th>
-                <td><input type="text" name="title" class="title" size="40" v-model="title" @focus="set_flg">
+                <td><input type="text" name="title" class="title" size="40" v-model="title">
                 <transition name="button_group1">
-                    <button v-if="sel_flg == false" @click="find">find</button>
+                    <v-btn v-if="sel_flg == false" @click="find">find</v-btn>
                 </transition>
                 </td>
             </tr>
             <tr>
                 <th>Content</th>
-                <td><textarea name="content" class="content" cols="50" rows="5" v-model="content"></textarea></td>
+                <td><v-textarea name="content" class="content" cols="50" rows="5" v-model="content"></v-textarea></td>
             </tr>
             <tr>
                 <th></th>
-                <td><button v-if="sel_flg == false" @click="insert">save</button>
+                <td><v-btn v-if="sel_flg == false" @click="insert">save</v-btn>
                 <transition name="button_group1">
                     <span v-if="sel_flg != false">
-                        <button @click="update">update</button> 
-                        <button @click="remove">delete </button>
-                        <button class="right" @click="set_flg">return </button>
+                        <v-btn @click="update">update</v-btn> 
+                        <v-btn @click="remove">delete </v-btn>
+                        <v-btn class="right" @click="set_flg">return </v-btn>
                     </span>
                 </transition>
                 </td>
             </tr>
         </table>
         <hr>
-        <ul class="list">
+        <ul class="list" v-if="sel_flg == false">
             <li v-for="(item, index) in page_items" :key="index">
                 <span @click="select(item)">{{ item.title }}({{ item.created }})</span>
             </li>
@@ -166,6 +157,12 @@ pre {
     font-size: 18pt;
     background-color: #efefef;
 }
+table {
+    width:585px;
+}
+.title {
+    background-color: white;
+}
 input {
     font-size: 14pt;
     margin: 5px;
@@ -173,14 +170,9 @@ input {
 textarea {
     font-size: 14pt;
     margin: 5px;
+    background-color: white;
 }
 /* button {
-    font-size: 14pt;
-    padding: 1px 10px;
-    margin: 5px;
-    width: 75px;
-} */
-button {
   color:rgba(43, 32, 32, 0.76) ;
   font-size: 18px;
   cursor: pointer;
@@ -189,7 +181,7 @@ button {
   border: 1px solid #D7DBDD;
   border-radius: 0;
   outline: 0;
-}
+} */
 .right {
     float: right;
 }
