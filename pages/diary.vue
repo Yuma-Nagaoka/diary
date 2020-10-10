@@ -27,13 +27,22 @@
                 </td>
             </tr>
         </table>
-        <hr>
-        <ul class="list" v-if="sel_flg == false">
-            <li v-for="(item, index) in page_items" :key="index">
-                <span @click="select(item)">{{ item.title }}({{ item.created }})</span>
-            </li>
-        </ul>
-        <hr>
+        <!-- <hr> -->
+        <br>
+        <v-card>
+            <v-list list v-if="sel_flg == false">
+                <v-list-item
+                    v-for="(item, index) in page_items"
+                    :key="index"
+                    @click="select(item)"
+                >
+                    <v-list-item-content>
+                        <v-list-item-title>{{ item.title }}({{ item.created }})</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-card>
+        <!-- <hr> -->
         <div class="nav"><span @click="prev">&lt;prev</span> | <span @click="next">next&gt;</span></div>
     </div>
 </template>
