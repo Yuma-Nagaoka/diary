@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <h1>Diary</h1>
+        {{this.$store.state.diary.message}}
         <table>
             <tr>
                 <th>Title</th>
@@ -32,12 +33,12 @@
         <v-card>
             <v-list list v-if="sel_flg == false">
                 <v-list-item
-                    v-for="(item, index) in page_items"
-                    :key="index"
-                    @click="select(item)"
+                    v-for="(item, key) in page_items"
+                    :key="key"
+                    @click="select(item, key)"
                 >
                     <v-list-item-content>
-                        <v-list-item-title>{{ item.title }}({{ item.created }})</v-list-item-title>
+                        <v-list-item-title>{{ item.title }} ({{ item.created }})</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -48,15 +49,19 @@
 </template>
 
 <script>
+
+
 export default {
     data: function(){
         return {
+            id: '',
             title: '',
             content: '',
             created: '',
             num_per_page: 7,
             find_flg: false,
             sel_flg: false,
+            message: ''
         };
     },
     computed: {
@@ -74,7 +79,7 @@ export default {
             }else if(this.sel_flg != false){
                 return [this.sel_flg];
             }else {
-                return this.$store.state.diary.diary.slice(this.num_per_page * this.$store.state.diary.page, this.num_per_page * (this.$store.state.diary.page + 1));
+                return this.$store.state.diary.diary;//.slice(this.num_per_page * this.$store.state.diary.page, this.num_per_page * (this.$store.state.diary.page + 1));
             }
         },
         page: {
@@ -99,7 +104,19 @@ export default {
             }
         },
         insert: function(){
-            this.$store.commit('diary/insert', {title:this.title, content:this.content});
+            this.$store.dispatch('diary/insert', {title:this.title, content:this.content});
+            // function sleep (time) {
+            //     return new Promise((resolve) => {
+            //         setTimeout(resolve, time)
+            //     })
+            // }
+            const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+            async function f(){
+                await _sleep(2000);
+            }
+            f();
+            this.$store.dispatch('diary/fetch');
+            this.id = '';
             this.title = '';
             this.content= '';
         },
@@ -114,13 +131,23 @@ export default {
                 this.set_flg();
             }
         },
-        select: function(item){
+        select: function(item, key){
             this.find_flg = false;
             this.sel_flg = item;
+            this.id = key;
             this.title = item.title;
             this.content = item.content;
             this.created = item.created;
         },
+        // getData: function() {
+        //     axios.get(url + '.json').then((res) => {
+        //         this.message = 'get all data.';
+        //         this.json_data = res.data;
+        //     }).catch((error) => {
+        //         this.message = 'ERROR!';
+        //         this.json_data = {};
+        //     });
+        // },
         remove: function(){
             if(this.sel_flg == false){
                 return;
@@ -142,6 +169,7 @@ export default {
     },
     created: function(){
         this.$store.commit('diary/set_page', 0);
+        this.$store.dispatch('diary/fetch');
     },
 }
 </script>

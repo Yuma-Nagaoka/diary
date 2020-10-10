@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
-import createPersistedState from "vuex-persistedstate";
+// import createPersistedState from "vuex-persistedstate";
 
-export const plugins = [
-    createPersistedState(),
-]
+// export const plugins = [
+//     createPersistedState(),
+// ]

@@ -10,6 +10,7 @@
     "dev-debug": "node --inspect-brk=9229 node_modules/nuxt/bin/nuxt"
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "nuxt": "^2.14.6",
     "vuetify": "^2.3.12",
