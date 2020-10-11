@@ -62,8 +62,10 @@ export const actions = {
     fetch: function({commit}){
         axios.get(url + '.json').then((res) => {
             commit('set', res.data);
+            console.log('Executed fetch_action')
         }).catch((error) => {
             commit('set', []);
+            console.log('Error occurred at fetch_action')
         });
     },
     insert: function(context, item) {
@@ -79,6 +81,7 @@ export const actions = {
             await axios.put(add_url, item);
         }
         f();
+        console.log('Executed insert_action')
         // axios.put(add_url, item).then((re)=> {
         //     // this.email = '';
         //     // this.username = '';
