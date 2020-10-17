@@ -105,29 +105,19 @@ export default {
         },
         insert: function(){
             this.$store.dispatch('diary/insert', {title:this.title, content:this.content});
-            // function sleep (time) {
-            //     return new Promise((resolve) => {
-            //         setTimeout(resolve, time)
-            //     })
-            // }
-            let waitSeconds = 4;
-            const sleep = (waitSeconds) => {
-                return new Promise(resolve => {
-                    setTimeout(() => {
-                        resolve()
-                    }, waitSeconds * 1000)
-                })
-            }
-            sleep(4).then(() => {
-                console.log("wait" + waitSeconds);
-                this.$store.dispatch('diary/fetch');
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+
+            const sleep = (msec) => new Promise(resolve => setTimeout(resolve, msec));
+            (async () => {
+            // console.log('Start');
+            await sleep(1000);
+            // console.log('1 second has passed');
+            this.$store.dispatch('diary/fetch');
+            })();
+            
             this.id = '';
             this.title = '';
-            this.content= '';
+            this.content = '';
+            this.created = '';
         },
         update: function(){
             if(this.sel_flg == false){
