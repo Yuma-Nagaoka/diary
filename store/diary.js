@@ -16,7 +16,19 @@ export const state = () => ({
 export const mutations = {
     set: function(state, data){
         state.message = 'get all data.';
-        state.diary = data;
+        let keys = Object.keys(data);
+        keys.sort(function(a, b){return b - a});
+        for(let key of keys) {
+            state.diary[key] = data[key];
+        }
+        // data.sort(function(a,b){
+        //     console.log(a);
+        //     console.log(b);
+        //     if(a < b) return -1;
+        //     if(a > b) return 1;
+        //     return 0;
+        // });
+        // state.diary = data;
     },
     insert: function(state, obj){
         var date = new Date();
@@ -60,17 +72,17 @@ export const mutations = {
 
 export const actions = {
     fetch: function({commit}){
-        axios.get(url + '.json').then((res) => {
-            commit('set', res.data);
-        }).catch((error) => {
-            commit('set', []);
-        });
+        async function f() {
+            const result = await axios.get(url + '.json');
+            commit('set', result.data);
+        }
+        f();
     },
-    insert: function(context, item) {
+    insert: function(context, item){
         var date = new Date();
-        const id = date.getFullYear().toString() + (date.getMonth() + 1).toString() + date.getDate().toString() + date.getHours().toString() + date.getMinutes().toString() + date.getSeconds().toString();
-        console.log(id);
-        var format = date.getFullYear() + '-' + (date.getMonth() + 1)
+        const id = date.getFullYear().toString() + zeroPadding((date.getMonth() + 1), 2).toString() + zeroPadding(date.getDate(), 2).toString() 
+            + zeroPadding(date.getHours(), 2).toString() + zeroPadding(date.getMinutes(), 2).toString() + zeroPadding(date.getSeconds(), 2).toString();
+        const format = date.getFullYear() + '-' + (date.getMonth() + 1)
             + '-' + date.getDate() + '-' + zeroPadding(date.getHours(), 2) + ':'
             + zeroPadding(date.getMinutes(), 2);
         const add_url = url + '/' + id + '.json';
@@ -87,4 +99,11 @@ export const actions = {
         //     // this.getData();
         // });
     },
+    update: function(context, item){
+        const update_url = url + '/' + item.id + '.json';
+        async function f() {
+            await axios.put(update_url, item);
+        }
+        f();
+    }
 }

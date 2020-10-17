@@ -110,12 +110,21 @@ export default {
             //         setTimeout(resolve, time)
             //     })
             // }
-            const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-            async function f(){
-                await _sleep(2000);
+            let waitSeconds = 4;
+            const sleep = (waitSeconds) => {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve()
+                    }, waitSeconds * 1000)
+                })
             }
-            f();
-            this.$store.dispatch('diary/fetch');
+            sleep(4).then(() => {
+                console.log("wait" + waitSeconds);
+                this.$store.dispatch('diary/fetch');
+            })
+            .catch((error) => {
+                console.log(error);
+            });
             this.id = '';
             this.title = '';
             this.content= '';
@@ -124,11 +133,13 @@ export default {
             if(this.sel_flg == false){
                 return;
             }else {
-                this.$store.commit('diary/update', {id:this.sel_flg.id, title:this.title, content:this.content, created:this.created});
+                this.$store.dispatch('diary/update', {id:this.id, title:this.title, content:this.content, created:this.created});
+                this.id = '';
                 this.title = '';
                 this.content = '';
                 this.created = '';
                 this.set_flg();
+                this.$store.dispatch('diary/fetch');
             }
         },
         select: function(item, key){
