@@ -108,12 +108,12 @@ export default {
 
             const sleep = (msec) => new Promise(resolve => setTimeout(resolve, msec));
             (async () => {
-            // console.log('Start');
-            await sleep(1000);
-            // console.log('1 second has passed');
+            console.log('Start');
+            await sleep(2000);
+            console.log('2 second has passed');
             this.$store.dispatch('diary/fetch');
             })();
-            
+
             this.id = '';
             this.title = '';
             this.content = '';
@@ -123,7 +123,7 @@ export default {
             if(this.sel_flg == false){
                 return;
             }else {
-                this.$store.dispatch('diary/update', {id:this.id, title:this.title, content:this.content, created:this.created});
+                this.$store.dispatch('diary/update', {id:this.sel_flg.id, title:this.title, content:this.content, created:this.created});
                 this.id = '';
                 this.title = '';
                 this.content = '';

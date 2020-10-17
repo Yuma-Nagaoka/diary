@@ -19,8 +19,9 @@ export const mutations = {
         let keys = Object.keys(data);
         keys.sort(function(a, b){return b - a});
         for(let key of keys) {
-            state.diary[key] = data[key];
+            state.diary.push(data[key]);
         }
+        console.log('done mutations:set');
         // data.sort(function(a,b){
         //     console.log(a);
         //     console.log(b);
