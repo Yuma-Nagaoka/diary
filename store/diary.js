@@ -86,10 +86,15 @@ export const actions = {
         var date = new Date();
         const id = date.getFullYear().toString() + zeroPadding((date.getMonth() + 1), 2).toString() + zeroPadding(date.getDate(), 2).toString() 
             + zeroPadding(date.getHours(), 2).toString() + zeroPadding(date.getMinutes(), 2).toString() + zeroPadding(date.getSeconds(), 2).toString();
-        const format = date.getFullYear() + '-' + (date.getMonth() + 1)
-            + '-' + date.getDate() + '-' + zeroPadding(date.getHours(), 2) + ':'
-            + zeroPadding(date.getMinutes(), 2);
+        const format = formatDate(id);
+        function formatDate(strDate){
+            return strDate.slice(0,4) + '/' + strDate.slice(4,6) + '/' + strDate.slice(6,8) + ' ' + strDate.slice(8,10) + ':' + strDate.slice(10,12);
+        }
+            // date.getFullYear() + '-' + (date.getMonth() + 1)
+            // + '-' + date.getDate() + '-' + zeroPadding(date.getHours(), 2) + ':'
+            // + zeroPadding(date.getMinutes(), 2);
         const add_url = url + '/' + id + '.json';
+        item.id = id;
         item.created = format;
         async function f() {
             await axios.put(add_url, item);
@@ -106,8 +111,16 @@ export const actions = {
     },
     update: function(context, item){
         const update_url = url + '/' + item.id + '.json';
+        console.log(item, update_url);
         async function f() {
             await axios.put(update_url, item);
+        }
+        f();
+    },
+    remove: function(context, item){
+        const remove_url = url + '/' + item.id + '.json';
+        async function f() {
+            await axios.delete(remove_url);
         }
         f();
     }

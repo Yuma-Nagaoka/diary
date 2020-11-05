@@ -50,7 +50,6 @@
 
 <script>
 
-
 export default {
     data: function(){
         return {
@@ -123,7 +122,7 @@ export default {
             if(this.sel_flg == false){
                 return;
             }else {
-                this.$store.dispatch('diary/update', {id:this.sel_flg.id, title:this.title, content:this.content, created:this.created});
+                this.$store.dispatch('diary/update', {id:this.id, title:this.title, content:this.content, created:this.created});
                 this.id = '';
                 this.title = '';
                 this.content = '';
@@ -133,9 +132,10 @@ export default {
             }
         },
         select: function(item, key){
+            console.log(item, key);
             this.find_flg = false;
             this.sel_flg = item;
-            this.id = key;
+            this.id = item.id;
             this.title = item.title;
             this.content = item.content;
             this.created = item.created;
@@ -153,7 +153,7 @@ export default {
             if(this.sel_flg == false){
                 return;
             }else {
-                this.$store.commit('diary/remove', this.sel_flg);
+                this.$store.dispatch('diary/remove', this.sel_flg);
                 this.set_flg();
             }
         },
