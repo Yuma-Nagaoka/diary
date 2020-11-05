@@ -7,7 +7,7 @@ function zeroPadding(num,length){
 }
 
 export const state = () => ({
-    diary: {},
+    diary: [],
     page: 0,
     json_data: {},
     message: 'init',  
@@ -15,12 +15,13 @@ export const state = () => ({
 
 export const mutations = {
     set: function(state, data){
-        state.message = 'get all data.';
+        state.message = 'get all data!';
         let keys = Object.keys(data);
         keys.sort(function(a, b){return b - a});
         for(let key of keys) {
             state.diary.push(data[key]);
         }
+        // state.diary = data;
         console.log('done mutations:set');
         // data.sort(function(a,b){
         //     console.log(a);
@@ -78,7 +79,7 @@ export const actions = {
             console.log('Executed fetch_action')
         }).catch((error) => {
             commit('set', []);
-            console.log('Error occurred at fetch_action')
+            console.log('Error occurred at fetch_action', error)
         });
     },
     insert: function(context, item){
