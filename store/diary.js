@@ -44,32 +44,32 @@ export const mutations = {
             created: format
         });
     },
-    update: function(state, obj){
-        var date = new Date();
-        for(let i = 0; i < state.diary.length; i++){
-            const ob = state.diary[i];
-            if(ob.id == obj.id){
-                    alert('update it! --' + obj.title);
-                    ob.title = obj.title;
-                    ob.content = obj.content;
-                    return;
-                }
-        }
-    },
+    // update: function(state, obj){
+    //     var date = new Date();
+    //     for(let i = 0; i < state.diary.length; i++){
+    //         const ob = state.diary[i];
+    //         if(ob.id == obj.id){
+    //                 alert('update it! --' + obj.title);
+    //                 ob.title = obj.title;
+    //                 ob.content = obj.content;
+    //                 return;
+    //             }
+    //     }
+    // },
     set_page: function(state, p){
         state.page = p;
     },
-    remove: function(state, obj){
-        var num = 0;
-        for(let i = 0; i < state.diary.length; i++){
-            const ob = state.diary[i];
-            if(ob.title == obj.title && ob.content == obj.content && ob.created == obj.created){
-                alert('remove it! --' + obj.title);
-                state.diary.splice(i, 1);
-                return;
-            }
-        }
-    },
+    // remove: function(state, obj){
+    //     var num = 0;
+    //     for(let i = 0; i < state.diary.length; i++){
+    //         const ob = state.diary[i];
+    //         if(ob.title == obj.title && ob.content == obj.content && ob.created == obj.created){
+    //             alert('remove it! --' + obj.title);
+    //             state.diary.splice(i, 1);
+    //             return;
+    //         }
+    //     }
+    // },
 }
 
 export const actions = {
@@ -112,6 +112,7 @@ export const actions = {
     update: function(context, item){
         const update_url = url + '/' + item.id + '.json';
         console.log(item, update_url);
+        alert('update it! --' + item.title);
         async function f() {
             await axios.put(update_url, item);
         }
@@ -119,6 +120,7 @@ export const actions = {
     },
     remove: function(context, item){
         const remove_url = url + '/' + item.id + '.json';
+        alert('remove it! --' + item.title);
         async function f() {
             await axios.delete(remove_url);
         }
