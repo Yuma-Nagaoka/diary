@@ -182,6 +182,7 @@ export default {
 h1 {
     font-size: 60pt;
     color: #345980;
+    font-style: oblique;
 }
 p {
     padding-top: 5px;
