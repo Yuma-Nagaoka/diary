@@ -44,7 +44,16 @@
             </v-list>
         </v-card>
         <!-- <hr> -->
-        <div class="nav"><span @click="prev">&lt;prev</span> | <span @click="next">next&gt;</span></div>
+        <br>
+        <div class="nav">
+            <v-pagination
+                color="blue"
+                v-model="page"
+                :length="4"
+                circle
+            ></v-pagination>
+        </div>
+        <!-- <div class="nav"><span @click="prev">&lt;prev</span> | <span @click="next">next&gt;</span></div> -->
     </div>
 </template>
 
@@ -245,8 +254,9 @@ td {
     padding: 5px;
 }
 .nav {
-    padding: 0px 10px;
-    cursor : pointer;
+    float: left;
+    /* padding: 0px 10px;
+    cursor : pointer; */
 }
 .list {
     cursor : pointer;
