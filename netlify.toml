@@ -1,2 +1,2 @@
 [build]
- publish = "pages/diary"
+ publish = "pages/"
