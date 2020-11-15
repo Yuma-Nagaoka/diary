@@ -10,12 +10,12 @@ export const state = () => ({
     diary: [],
     page: 0,
     json_data: {},
-    message: 'init',  
+    message: 'Init',  
 })
 
 export const mutations = {
     set: function(state, data){
-        state.message = 'get all data!';
+        state.message = 'Wellcome!';
         let keys = Object.keys(data);
         keys.sort(function(a, b){return b - a});
         for(let key of keys) {
