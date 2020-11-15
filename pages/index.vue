@@ -9,6 +9,12 @@
                 <transition name="button_group1">
                     <v-btn v-if="sel_flg == false" @click="find">find</v-btn>
                 </transition>
+                <!-- <v-btn-toggle
+                v-model="toggle_exclusive"
+                rounded
+                >
+                    <v-btn v-if="sel_flg == false" @click="find">find</v-btn>
+                </v-btn-toggle> -->
                 </td>
             </tr>
             <tr>
@@ -168,7 +174,11 @@ export default {
         },
         find: function(){
             this.sel_flg = false;
-            this.find_flg = true;
+            if(this.find_flg == true){
+                this.find_flg = false;
+            }else {
+                this.find_flg = true;
+            }
         },
         next: function(){
             this.page++;
