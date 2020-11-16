@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = "https://okayu-vue.firebaseio.com/diary_private";
+const url = "https://okayu-vue.firebaseio.com/diary";
 
 function zeroPadding(num,length){
     return ('0000000000' + num).slice(-length);
