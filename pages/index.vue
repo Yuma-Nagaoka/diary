@@ -7,14 +7,8 @@
                 <th>Title</th>
                 <td><input type="text" name="title" class="title" size="40" v-model="title">
                 <transition name="button_group1">
-                    <v-btn v-if="sel_flg == false" @click="find">find</v-btn>
+                    <v-btn v-bind:style="styleObject" v-if="sel_flg == false" @click="find(); isActive = !isActive">find</v-btn>
                 </transition>
-                <!-- <v-btn-toggle
-                v-model="toggle_exclusive"
-                rounded
-                >
-                    <v-btn v-if="sel_flg == false" @click="find">find</v-btn>
-                </v-btn-toggle> -->
                 </td>
             </tr>
             <tr>
@@ -75,7 +69,8 @@ export default {
             num_per_page: 7,
             find_flg: false,
             sel_flg: false,
-            message: ''
+            message: '',
+            isActive:true,
         };
     },
     computed: {
@@ -106,6 +101,23 @@ export default {
                 this.$store.commit('diary/set_page', pg);
             }
         },
+        classColorSet: function(){
+        　　return {
+        　　    red:this.isActive,
+        　　　  yellow: !this.isActive　
+        　　}　
+        },
+        styleObject: function(){
+            if(this.isActive){
+                return {
+                    color: 'black'
+                }
+            }else {
+                return {
+                    color: 'red'
+                }
+            }
+        }
     },
     methods: {
         set_flg: function(){
@@ -276,6 +288,25 @@ td {
 }
 .button_group1-enter, .button_group1-leave-to {
     opacity: 0;
+}
+.white {
+    color: white;
+    width: 80px;
+    height: 200px;  
+
+}
+.blue {
+    width: 80px;
+    height: 200px;
+    color: blue;
+
+}
+.red{
+  color: red;
+}
+ 
+.yellow{
+  background-color: yellow;
 }
 </style>
 

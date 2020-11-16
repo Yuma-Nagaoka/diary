@@ -51,6 +51,14 @@
 ・タイトルを斜体にした
 11/16
 ・プライベート用のデータベースを作成し、URLをそれに変えた
+11/17
+・findフラグがtrueのときおfalseの時でテキストの色を変更し、視覚的にわかりやすくした。
+	-参考サイト
+		-https://www.searchlight8.com/vue-js-v-onclick-class-change/
+		-http://html5.cyberlab.info/elements/text/span.html
+		-https://qiita.com/ykhirao/items/1ff89bd157bc9480d899
+	-備考
+		-classではなく、styleをバインドし、compuedで値の変更を検知させた
 
 
 ■備考
