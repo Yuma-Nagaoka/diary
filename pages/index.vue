@@ -43,17 +43,15 @@
                 </v-list-item>
             </v-list>
         </v-card>
-        <!-- <hr> -->
         <br>
         <div class="nav">
             <v-pagination
-                color="blue"
                 v-model="page"
+                color="rgba(255, 0, 0, 0.5)"
                 :length="4"
-                circle
+                @input = "getNumber"
             ></v-pagination>
         </div>
-        <!-- <div class="nav"><span @click="prev">&lt;prev</span> | <span @click="next">next&gt;</span></div> -->
     </div>
 </template>
 
@@ -71,6 +69,7 @@ export default {
             sel_flg: false,
             message: '',
             isActive:true,
+            page: 1,
         };
     },
     computed: {
@@ -88,17 +87,7 @@ export default {
             }else if(this.sel_flg != false){
                 return [this.sel_flg];
             }else {
-                return this.$store.state.diary.diary;//.slice(this.num_per_page * this.$store.state.diary.page, this.num_per_page * (this.$store.state.diary.page + 1));
-            }
-        },
-        page: {
-            get: function(){
-                return this.$store.state.diary.page;
-            },
-            set: function(p){
-                var pg = p > (this.$store.state.diary.diary.length - 1) / this.num_per_page ? Math.ceil((this.$store.state.diary.diary.length -1) / this.num_per_page) - 1 : p;
-                pg = pg < 0 ? 0 : pg;
-                this.$store.commit('diary/set_page', pg);
+                return this.$store.state.diary.diary.slice(this.num_per_page * (this.page - 1), this.num_per_page * this.page);
             }
         },
         classColorSet: function(){
@@ -192,12 +181,9 @@ export default {
                 this.find_flg = true;
             }
         },
-        next: function(){
-            this.page++;
-        },
-        prev: function(){
-            this.page--;
-        },
+        getNumber: function(number){
+            this.page = number;
+        },  
     },
     created: function(){
         this.$store.commit('diary/set_page', 0);
@@ -277,8 +263,6 @@ td {
 }
 .nav {
     float: left;
-    /* padding: 0px 10px;
-    cursor : pointer; */
 }
 .list {
     cursor : pointer;
