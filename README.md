@@ -1,5 +1,9 @@
 # diary
 
+サイトURL　https://blissful-pasteur-d97658.netlify.app/
+
+
+
 ## Build Setup
 
 ```bash
